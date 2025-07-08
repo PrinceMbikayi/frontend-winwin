@@ -147,20 +147,11 @@ const SuggestionsScreen = ({ navigation }) => {
         }
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Ionicons name="bulb-outline" size={64} color="#ccc" />
             <Text style={styles.emptyTitle}>Aucune suggestion</Text>
             <Text style={styles.emptyText}>
               Nous analysons vos préférences pour vous proposer des suggestions
               personnalisées.
             </Text>
-            <TouchableOpacity
-              style={styles.generateButton}
-              onPress={() => generateSmartSuggestions()}
-            >
-              <Text style={styles.generateButtonText}>
-                Générer des suggestions
-              </Text>
-            </TouchableOpacity>
           </View>
         }
         showsVerticalScrollIndicator={false}

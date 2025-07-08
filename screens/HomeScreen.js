@@ -161,7 +161,6 @@ const HomeScreen = ({ navigation }) => {
           style={styles.exchangeButton}
           onPress={(e) => {
             e.stopPropagation();
-            const { canPerformAction } = require('../context/SubscriptionContext');
             if (!canPerformAction('exchange')) {
               Alert.alert(
                 'Abonnement requis',
@@ -194,12 +193,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.headerTop}>
           <Text style={styles.headerTitle}>WinWin</Text>
           <View style={styles.headerActions}>
-            <TouchableOpacity
-              style={styles.actionButton}
-              onPress={() => navigation.navigate("Suggestions")}
-            >
-              <Ionicons name="bulb-outline" size={24} color="#227897" />
-            </TouchableOpacity>
+
             <TouchableOpacity
               style={styles.actionButton}
               onPress={() => navigation.navigate("Map")}

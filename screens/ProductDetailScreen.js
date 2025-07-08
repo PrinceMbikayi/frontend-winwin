@@ -38,10 +38,27 @@ const mockProduct = {
   distance: "2.5 km",
 };
 
-import { useExchange } from '../context/ExchangeContext';
+import { useExchange } from "../context/ExchangeContext";
 
 const ProductDetailScreen = ({ navigation, route }) => {
-  const { canPerformAction, userHasActiveSubscription } = useSubscription();
+  // Styles pour les boutons d'échange similaires aux boutons Contacter et Favoris
+  const exchangeButtonStyle = {
+    backgroundColor: "#227897",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: "center",
+    marginVertical: 8,
+  };
+
+  const exchangeButtonTextStyle = {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
+  };
+
+  // ... existing code continues ...
+  const { canPerformAction } = useSubscription();
   const [isFavorite, setIsFavorite] = useState(false);
   const [selectedDelivery, setSelectedDelivery] = useState("hand");
 
@@ -52,35 +69,35 @@ const ProductDetailScreen = ({ navigation, route }) => {
 
   // Function to handle exchange status changes
   const handleStartExchange = () => {
-    if (!userHasActiveSubscription) {
+    if (!canPerformAction("exchange")) {
       navigation.navigate("SubscriptionScreen");
       return;
     }
     setExchangeStatus("in_progress");
-    if(route.params?.exchangeId) {
-      updateExchange(route.params.exchangeId, { status: 'pending' });
+    if (route.params?.exchangeId) {
+      updateExchange(route.params.exchangeId, { status: "pending" });
     }
   };
 
   const handleCompleteExchange = () => {
-    if (!userHasActiveSubscription) {
+    if (!canPerformAction("exchange")) {
       navigation.navigate("SubscriptionScreen");
       return;
     }
     setExchangeStatus("active");
-    if(route.params?.exchangeId) {
-      updateExchange(route.params.exchangeId, { status: 'active' });
+    if (route.params?.exchangeId) {
+      updateExchange(route.params.exchangeId, { status: "active" });
     }
   };
 
   const handleFailExchange = () => {
-    if (!userHasActiveSubscription) {
+    if (!canPerformAction("exchange")) {
       navigation.navigate("SubscriptionScreen");
       return;
     }
     setExchangeStatus("inactive");
-    if(route.params?.exchangeId) {
-      updateExchange(route.params.exchangeId, { status: 'cancelled' });
+    if (route.params?.exchangeId) {
+      updateExchange(route.params.exchangeId, { status: "cancelled" });
     }
   };
 
@@ -109,16 +126,16 @@ const ProductDetailScreen = ({ navigation, route }) => {
   ];
 
   const handleContactSeller = () => {
-    if (!canPerformAction('message')) {
+    if (!canPerformAction("message")) {
       Alert.alert(
-        'Fonctionnalité Premium',
-        'La messagerie nécessite un abonnement. Voulez-vous voir nos plans ?',
+        "Fonctionnalité Premium",
+        "La messagerie nécessite un abonnement. Voulez-vous voir nos plans ?",
         [
-          { text: 'Plus tard', style: 'cancel' },
+          { text: "Plus tard", style: "cancel" },
           {
-            text: 'Voir les plans',
-            onPress: () => navigation.navigate('Subscription')
-          }
+            text: "Voir les plans",
+            onPress: () => navigation.navigate("Subscription"),
+          },
         ]
       );
       return;
@@ -325,24 +342,27 @@ const ProductDetailScreen = ({ navigation, route }) => {
         </View>
 
         {/* Boutons de validation d'échange */}
-        <View style={styles.exchangeStatusButtons}>
+        <View style={styles.actionButtons}>
           <TouchableOpacity
-            style={[styles.exchangeButton, styles.exchangeStartButton]}
+            style={[styles.contactButton, styles.exchangeStartButton]}
             onPress={handleStartExchange}
           >
-            <Text style={styles.exchangeButtonText}>Échange en cours</Text>
+            <Ionicons name="time" size={20} color="#fff" />
+            <Text style={styles.contactButtonText}>Échange en cours</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.exchangeButton, styles.exchangeCompleteButton]}
+            style={[styles.favoriteActionButton, styles.exchangeCompleteButton, {marginRight: 10}]}
             onPress={handleCompleteExchange}
           >
-            <Text style={styles.exchangeButtonText}>Échange effectué</Text>
+            <Ionicons name="checkmark-circle" size={20} color="#fff" />
+            <Text style={styles.favoriteActionButtonText}>Échange effectué</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.exchangeButton, styles.exchangeFailButton]}
+            style={[styles.favoriteActionButton, styles.exchangeFailButton]}
             onPress={handleFailExchange}
           >
-            <Text style={styles.exchangeButtonText}>Échange échoué</Text>
+            <Ionicons name="close-circle" size={20} color="#fff" />
+            <Text style={styles.favoriteActionButtonText}>Échange échoué</Text>
           </TouchableOpacity>
         </View>
 
@@ -355,9 +375,21 @@ const ProductDetailScreen = ({ navigation, route }) => {
             </View>
           )}
           {exchangeStatus === "inactive" && (
-            <View style={[styles.exchangeStatusBadge, styles.exchangeStatusBadgeInactive]}>
+            <View
+              style={[
+                styles.exchangeStatusBadge,
+                styles.exchangeStatusBadgeInactive,
+              ]}
+            >
               <Ionicons name="close-circle" size={24} color="#FF3B30" />
-              <Text style={[styles.exchangeStatusText, styles.exchangeStatusTextInactive]}>Échange échoué</Text>
+              <Text
+                style={[
+                  styles.exchangeStatusText,
+                  styles.exchangeStatusTextInactive,
+                ]}
+              >
+                Échange échoué
+              </Text>
             </View>
           )}
           {exchangeStatus === "in_progress" && (

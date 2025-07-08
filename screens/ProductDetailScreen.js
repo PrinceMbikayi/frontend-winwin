@@ -9,6 +9,7 @@ import {
   Image,
   Alert,
   Dimensions,
+  Platform,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSubscription } from "../context/SubscriptionContext";
@@ -351,11 +352,17 @@ const ProductDetailScreen = ({ navigation, route }) => {
             <Text style={styles.contactButtonText}>Échange en cours</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.favoriteActionButton, styles.exchangeCompleteButton, {marginRight: 10}]}
+            style={[
+              styles.favoriteActionButton,
+              styles.exchangeCompleteButton,
+              { marginRight: 10 },
+            ]}
             onPress={handleCompleteExchange}
           >
             <Ionicons name="checkmark-circle" size={20} color="#fff" />
-            <Text style={styles.favoriteActionButtonText}>Échange effectué</Text>
+            <Text style={styles.favoriteActionButtonText}>
+              Échange effectué
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.favoriteActionButton, styles.exchangeFailButton]}
@@ -408,6 +415,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f8f9fa",
+    paddingTop: Platform.OS === "android" ? 25 : 0,
   },
   exchangeButton: {
     paddingVertical: 15,

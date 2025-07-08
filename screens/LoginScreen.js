@@ -108,15 +108,13 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.socialButtonText}>Facebook</Text>
           </TouchableOpacity>
 
-          {Platform.OS === 'ios' && (
-            <TouchableOpacity
-              style={[styles.socialButton, styles.appleButton]}
-              onPress={() => handleSocialLogin('Apple')}
-            >
-              <Ionicons name="logo-apple" size={20} color="#fff" />
-              <Text style={styles.socialButtonText}>Apple</Text>
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity
+            style={[styles.socialButton, styles.appleButton]}
+            onPress={() => handleSocialLogin('Apple')}
+          >
+            <Ionicons name="logo-apple" size={20} color="#fff" />
+            <Text style={styles.socialButtonText}>Apple</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.footer}>
@@ -134,6 +132,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f8f9fa',
+    paddingTop: Platform.OS === 'android' ? 25 : 0,
   },
   contentContainer: {
     flexGrow: 1,

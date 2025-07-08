@@ -242,15 +242,13 @@ const SignupScreen = ({ navigation }) => {
             <Text style={styles.socialButtonText}>Facebook</Text>
           </TouchableOpacity>
 
-          {Platform.OS === 'ios' && (
-            <TouchableOpacity
-              style={[styles.socialButton, styles.appleButton]}
-              onPress={() => handleSocialSignup('Apple')}
-            >
-              <Ionicons name="logo-apple" size={20} color="#fff" />
-              <Text style={styles.socialButtonText}>Apple</Text>
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity
+            style={[styles.socialButton, styles.appleButton]}
+            onPress={() => handleSocialSignup('Apple')}
+          >
+            <Ionicons name="logo-apple" size={20} color="#fff" />
+            <Text style={styles.socialButtonText}>Apple</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.footer}>
